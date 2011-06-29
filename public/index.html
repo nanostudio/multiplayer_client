@@ -2,7 +2,8 @@
 <html>
 <head>
   <title>Controle</title>
-
+  <meta name="viewport" content="user-scalable=no, width=device-width" />
+  
   <script src="jquery.min.js"></script>
 
   <script>
@@ -14,53 +15,83 @@
     else{
       document.cookie = "uid=" + uid + ";"  
     }
-    console.log(uid)
 
+    function setSizes(){
+      controlwidth = window.innerWidth - parseInt($('body').css("margin-left")) - parseInt($('body').css("margin-right"));
+      controlheight = window.innerHeight - parseInt($('body').css("margin-top")) - parseInt($('body').css("margin-bottom"));;
+      buttonwidth = controlwidth / 3;
+      buttonheight = controlheight / 3;
+      $("#controll").css("width", controlwidth);
+      $("#controll").css("height", controlheight);
+      $(".button").css("width", buttonwidth);
+      $(".button").css("height", buttonheight);
+      $("#up").css("margin-left", buttonwidth)
+      $("#down").css("margin-left", buttonwidth)
+
+    }
+
+    $(window).bind("orientationchange", setSizes)
     $(document).ready(function(){
+      setSizes();
+      
+      $('body').bind("touchstart", function(e){
+        e.preventDefault();
+        return false;
+      })
 
-      $(".button").bind("click", function(){
-        $.post('http://192.168.1.11:8080', { "uid": uid, "action": this.id }, function(data){
-        });
+      $(".button").bind("touchstart", function(e){
+        $.post('http://192.168.1.11:8080', { "uid": uid, "action": this.id });
+        e.preventDefault();
+        return false;
       })
     })
   </script>
 
   <style>
+    body {
+      padding-left: 0px;
+      padding-top: 0px;
+    }
+    #controll {
+      border: solid red 1px;
+      margin-left: 0px;
+      margin-top: 0px;
+      /*padding-bottom: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 5px;*/
+      /*width: 85px;*/
+      /*margin-left: 15px;
+      margin-top: 35px;*/
+      /*margin: 0 auto;*/
+    }
+
     .button {
-      width: 50px;
-      height: 50px;
-      margin-top: 10px;
+      width: 25px;
+      height: 25px;
     }
 
     #up{
       background-color: red;
       /*float: left;*/
-      margin-left: 60px;
+      /*margin-left: 30px;*/
     }
 
     #right {
       background-color: green;
+      /*margin-left: 60px;*/
       float: right;
       /*margin-top: 60px;*/
     }
 
     #down {
       background-color: blue;
-      margin-left: 60px;
+      /*margin-left: 30px;*/
     }
 
     #left {
       background-color: black;
       /*margin-top: 60px;*/
-    }
-
-    #controll {
-      border: solid red 1px;
-      padding-bottom: 10px;
-      padding-left: 10px;
-      padding-right: 10px;
-      width: 170px;
-      margin: 0 auto;
     }
   </style>
 </head>
