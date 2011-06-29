@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Controle</title>
+
+  <script src="jquery.min.js"></script>
+
+  <script>
+    cookie_uid = document.cookie.match(/uid=([0-9]+).*/)
+    uid = Math.floor(Math.random()*10000)
+    if(cookie_uid){
+      uid = cookie_uid[1]
+    }
+    else{
+      document.cookie = "uid=" + uid + ";"  
+    }
+    console.log(uid)
+
+    $(document).ready(function(){
+
+      $(".button").bind("click", function(){
+        $.post('http://192.168.1.11:8080', { "uid": uid, "action": this.id }, function(data){
+        });
+      })
+    })
+  </script>
+
+  <style>
+    .button {
+      width: 50px;
+      height: 50px;
+      margin-top: 10px;
+    }
+
+    #up{
+      background-color: red;
+      /*float: left;*/
+      margin-left: 60px;
+    }
+
+    #right {
+      background-color: green;
+      float: right;
+      /*margin-top: 60px;*/
+    }
+
+    #down {
+      background-color: blue;
+      margin-left: 60px;
+    }
+
+    #left {
+      background-color: black;
+      /*margin-top: 60px;*/
+    }
+
+    #controll {
+      border: solid red 1px;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      width: 170px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="controll">
+    <div id='up' class='button'></div>
+    <div id='right' class='button'></div>
+    <div id='left' class='button'></div>
+    <div id='down' class='button'></div>
+  </div>
+</body>
+</html>
