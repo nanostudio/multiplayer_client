@@ -3,7 +3,7 @@
 <head>
   <title>Controle</title>
   <meta name="viewport" content="user-scalable=no, width=device-width" />
-  
+
   <script src="jquery.min.js"></script>
 
   <script>
@@ -17,7 +17,7 @@
     }
 
     function setSizes(){
-      controlwidth = window.innerWidth - parseInt($('body').css("margin-left")) - parseInt($('body').css("margin-right"));
+      /*controlwidth = window.innerWidth - parseInt($('body').css("margin-left")) - parseInt($('body').css("margin-right"));
       controlheight = window.innerHeight - parseInt($('body').css("margin-top")) - parseInt($('body').css("margin-bottom"));;
       buttonwidth = controlwidth / 3;
       buttonheight = controlheight / 3;
@@ -26,13 +26,12 @@
       $(".button").css("width", buttonwidth);
       $(".button").css("height", buttonheight);
       $("#up").css("margin-left", buttonwidth)
-      $("#down").css("margin-left", buttonwidth)
+      $("#down").css("margin-left", buttonwidth)*/
 
     }
 
     $(window).bind("orientationchange", setSizes)
     $(document).ready(function(){
-      setSizes();
       
       $('body').bind("touchstart", function(e){
         e.preventDefault();
@@ -49,58 +48,61 @@
 
   <style>
     body {
-      padding-left: 0px;
-      padding-top: 0px;
+      padding: 0;
+      height: 100%;
     }
-    #controll {
-      border: solid red 1px;
-      margin-left: 0px;
-      margin-top: 0px;
-      /*padding-bottom: 5px;
-      padding-left: 5px;
-      padding-right: 5px;
-      padding-top: 5px;*/
-      /*width: 85px;*/
-      /*margin-left: 15px;
-      margin-top: 35px;*/
-      /*margin: 0 auto;*/
+    #control{
+      width: 100%;
+      height: 20em;
     }
 
-    .button {
-      width: 25px;
-      height: 25px;
+    #control td.button{
+      height: 30%;
+      width: 30%;
+      background: gray;
+      border-radius: 5px; 
+      vertical-align: middle;     
+      text-align: center;
     }
 
-    #up{
-      background-color: red;
-      /*float: left;*/
-      /*margin-left: 30px;*/
+  #control td.button:active{
+    background: #ddd;
+  }
+
+  #control td.button:active img{
+    opacity: 0.5;
+  }  
+
+    #control td.button img{
+      width: 80%;
+      height: 80%;
     }
 
-    #right {
-      background-color: green;
-      /*margin-left: 60px;*/
-      float: right;
-      /*margin-top: 60px;*/
-    }
-
-    #down {
-      background-color: blue;
-      /*margin-left: 30px;*/
-    }
-
-    #left {
-      background-color: black;
-      /*margin-top: 60px;*/
-    }
   </style>
 </head>
 <body>
-  <div id="controll">
+  <table id="control" height="100%">
+  <tr>
+    <td></td>
+    <td class="button" id='up'><img src="/arrow_up.png"></td>
+    <td></td>        
+  </tr>
+  <tr>
+    <td class="button" id='left'><img src="/arrow_left.png"></td>
+    <td></td>       
+    <td class="button" id='right'><img src="/arrow_right.png"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="button" id='down'><img src="/arrow_down.png"></td>
+    <td></td>        
+  </tr>    
+  </table>
+  <!--div id="control">
     <div id='up' class='button'></div>
     <div id='right' class='button'></div>
     <div id='left' class='button'></div>
     <div id='down' class='button'></div>
-  </div>
+  </div-->
 </body>
 </html>
