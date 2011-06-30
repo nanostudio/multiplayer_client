@@ -16,21 +16,7 @@
       document.cookie = "uid=" + uid + ";"  
     }
 
-    function setSizes(){
-      /*controlwidth = window.innerWidth - parseInt($('body').css("margin-left")) - parseInt($('body').css("margin-right"));
-      controlheight = window.innerHeight - parseInt($('body').css("margin-top")) - parseInt($('body').css("margin-bottom"));;
-      buttonwidth = controlwidth / 3;
-      buttonheight = controlheight / 3;
-      $("#controll").css("width", controlwidth);
-      $("#controll").css("height", controlheight);
-      $(".button").css("width", buttonwidth);
-      $(".button").css("height", buttonheight);
-      $("#up").css("margin-left", buttonwidth)
-      $("#down").css("margin-left", buttonwidth)*/
-
-    }
-
-    $(window).bind("orientationchange", setSizes)
+   
     $(document).ready(function(){
       
       $('body').bind("touchstart", function(e){
@@ -38,12 +24,41 @@
         return false;
       })
 
+      key_pressed = {up: null, down: null, left: null, right: null}
+
+      function move(id){
+        $.post('http://192.168.1.3:8080', { "uid": uid, "action": id });
+
+        setTimeout(function(){
+            if(key_pressed[id]) {
+            move(id);
+          }
+        }, 100);
+        // for(key in key_pressed){
+        //   if(key_pressed[key]){
+        //     $.post('http://192.168.1.3:8080', { "uid": uid, "action": key });  
+        //   }
+        // }
+        
+      }
+
       $(".button").bind("touchstart", function(e){
-        $.post('http://192.168.1.11:8080', { "uid": uid, "action": this.id });
+        key_pressed[this.id] = true;
+        move(this.id);
+        // key_pressed[this.id] = setInterval(move, 100);
+        e.preventDefault();
+        return false;
+      })
+
+      $(".button").bind("touchend", function(e){
+        key_pressed[this.id] = false;
+        // clearInterval(key_pressed[this.id]);
+        // key_pressed[this.id] = null;
         e.preventDefault();
         return false;
       })
     })
+
   </script>
 
   <style>
